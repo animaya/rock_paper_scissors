@@ -1,4 +1,7 @@
-console.log("Game Started");
+console.log("hello");
+const btns = document.querySelectorAll('#btn');
+const playerScore = document.querySelector(".player")
+const computerScore = document.querySelector(".computer")
 
 function computerPlay() {
     const figures = ["rock", "paper", "scissors"];
@@ -7,10 +10,6 @@ function computerPlay() {
 
 }
 
-function playerPlay() {
-    let playerInput = prompt("Your turn to select figure (rock-paper-scissors)").toLocaleLowerCase();
-    return playerInput
-}
 
 function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
@@ -40,27 +39,39 @@ function checkWhoWon(playRound) {
     }
 }
 
-function game(rounds) {
-    let round = 0;
-    let playerScore = 0;
-    let computerScore = 0;
-    while (round < rounds) {
-        let computerSelection = computerPlay();
-        let playerSelection = playerPlay();
-        let roundResult = playRound(playerSelection, computerSelection);
-        // console.log("computer chose -",computerSelection);
-        // console.log("player chose -", playerSelection);
-        if (checkWhoWon(roundResult)) {
-            playerScore += 1
-        } else {
-            computerScore += 1
-        }
-        console.log(roundResult);
-        round += 1
+let player_Score = 0;
+let computer_Score = 0; 
+function checkBtnValue(event) {
+    const btnValue = event.target.value;
+    let computerSelection = computerPlay();
+    let playerSelection = btnValue;
+
+    if (player_Score > 4) {
+        alert("Player Won")
+        player_Score =0;
+        computer_Score=0;
+    } else if (computer_Score > 4) {
+        alert("Computer Won")
+        player_Score =0;
+        computer_Score=0;
+
     }
-    console.log(`This game ended Player: ${playerScore} VS Computer: ${computerScore}`);
+    let roundResult = playRound(playerSelection, computerSelection);
+    if (checkWhoWon(roundResult)) {
+        player_Score += 1
+    } else {
+        computer_Score += 1
+    }
+    playerScore.textContent = player_Score;
+    computerScore.textContent = computer_Score;
 }
 
+btns.forEach(btn => {
+    btn.addEventListener('click', checkBtnValue)
+})
+    
+;
 
-game(5);
+
+
 
